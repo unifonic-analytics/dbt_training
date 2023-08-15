@@ -15,7 +15,8 @@ final as (
         userid as employee_id,
         customerid as customer_id,
         datetime as created_at,
-        date(datetime) as created_at_dt
+        date(datetime) as created_at_dt,
+        {{ utc_to_est('datetime') }} as created_at_est
 
     from orders
 
