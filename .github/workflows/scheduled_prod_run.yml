@@ -2,12 +2,13 @@ name: Scheduled Prod Run
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
-
+    - cron: '*/5 * * * *' # https://crontab.guru/
   workflow_dispatch:
+
 
 jobs:
   build-and-deploy:
+    concurrency: ci-${{ github.ref }}
     runs-on: ubuntu-latest
     env:
       DBT_USER: ${{ secrets.DBT_USER }}
@@ -27,3 +28,4 @@ jobs:
 
       - name: Deploy & Test Models (CI)
         run: dbt build --profiles-dir . --target prod
+        
